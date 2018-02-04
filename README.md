@@ -6,6 +6,10 @@ CMS application and contents
 ## 環境
 ・動作OS（CentOS7 1710.01）: 記述中
 ・スペック（1vcpu/1gb mem）: 記述中
+  * CPU: 1vcpu
+  * Mem: 512MB
+  * Net: 1gbps
+  * ディスク: 10GB
 ・app-contents レポをどこに配置するか？ : 記述中
 ・何を起動するか？（どのポートで待つとか）: 記述中
 
