@@ -4,8 +4,8 @@ CMS application and contents
 ---
 
 ## 環境
-* 動作OS（CentOS7 1710.01）: 記述中
-* スペック（1vcpu/1gb mem）: 記述中
+* 動作OS: CentOS 7.4.1708 (もちろん、これ以前の CentOS でも動作すると思われるが、未確認)
+* スペック:
   * CPU: 1vcpu
   * Mem: 512MB
   * Net: 1gbps
