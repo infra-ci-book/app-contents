@@ -9,9 +9,9 @@ CMS application and contents
   * CPU: 1vcpu
   * Mem: 512MB
   * Net: 1gbps
-  * ディスク: 10GB
+  * ディスク: 1GB (ketchup に投入するデータ量に比例する)
 * app-contents レポをどこに配置するか？ : 記述中
-* 何を起動するか？（どのポートで待つとか）: 記述中
+* 何を起動するか？（どのポートで待つとか）: `sudo nohup ./ketchup start &`
 
 ---
 ## 手順
