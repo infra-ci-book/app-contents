@@ -10,8 +10,10 @@ CMS application and contents
   * Mem: 512MB
   * Net: 1gbps
   * ディスク: 1GB (ketchup に投入するデータ量に比例する)
-* app-contents レポをどこに配置するか？ : 記述中
-* 何を起動するか？（どのポートで待つとか）: `sudo nohup ./ketchup start &`
+* app-contents レポをどこに配置するか？ : /home/vagrant/
+* 何を起動するか？:
+  * 起動に関しては下記の手順を参照
+  * ketchup を起動すると config.json の port で指定したポートで LISTEN します。(指定ないときは 127.0.0.1:8000)
 
 ---
 ## 手順
