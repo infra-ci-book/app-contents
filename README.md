@@ -25,7 +25,7 @@ CMS application and contents
 ```
 cd ~
 git clone https://github.com/infra-ci-book/app-contents.git
-tar -xzf app-contetns/applications/ketchup_Linux_x86_64.tar.gz
+tar -xzf app-contents/applications/ketchup_Linux_x86_64.tar.gz
 cp app-contetns/configurations/config.json ./
 cp -r app-contetns/contents/data ./
 sudo nohup ./ketchup start &
