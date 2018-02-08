@@ -16,7 +16,7 @@ CMS application and contents
   * ketchup を起動すると config.json の port で指定したポートで LISTEN します。(指定ないときは 127.0.0.1:8000)
 
 ---
-## 手順
+## 構築手順
 
 ディレクトリ applications 配下に ketchup のバイナリが、ディレクトリ configurations 配下に設定が、ディレクトリ contents 配下に ketchup のデータがあります。
 
@@ -26,11 +26,20 @@ CMS application and contents
 cd ~
 git clone https://github.com/infra-ci-book/app-contents.git
 tar -xzf app-contents/applications/ketchup_Linux_x86_64.tar.gz
-cp app-contetns/configurations/config.json ./
-cp -r app-contetns/contents/data ./
+cp app-contents/configurations/config.json ./
+cp -r app-contents/contents/data ./
 sudo nohup ./ketchup start &
 ```
 
-あとはブラウザで http://IP:PORT/admin にアクセスすればケチャップの画面が表示されます。 (私の環境では http://127.0.0.1:8000/admin)
-ログイン画面は emal が sample@example.com で password が password でログインできます。
+## 動作確認
+
+### 閲覧者
+
+ブラウザで http://IP:PORT/index および http://IP:PORT/ping にアクセスするとケチャップの画面が表示されます。 
+
+### 管理者
+
+ブラウザで http://IP:PORT/admin にアクセスするとケチャップのログイン画面が表示されます。
+
+ログイン画面は emal が admin で password が password でログインできます。
 
