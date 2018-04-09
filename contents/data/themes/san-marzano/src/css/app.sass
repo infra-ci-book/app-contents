@@ -1,0 +1,84 @@
+$color1: #455A64
+
+*
+  box-sizing: border-box
+
+body
+  font-family: 'Martel', serif
+  margin: 0
+
+h1, h2, h3, header
+  font-family: 'Montserrat', sans-serif
+  font-weight: 700
+  color: $color1
+  margin: 1em 0 0.5em
+  a
+    color: $color1
+    text-decoration: none
+
+h1
+  font-size: 3em
+  line-height: 1.05em
+
+h2
+  font-size: 2.25em
+  line-height: 1.25em
+  color: #37474F
+
+h3
+  font-size: 1.75em
+  line-height: 1.25em
+  color: #ccc
+  font-weight: 300
+
+pre code
+  display: block
+  font-family: Monaco, monospace
+  // font-size: 1.1em
+  padding: 1em
+  margin: 1em 0
+  background: #eee
+  border-radius: 4px
+  color: #555
+
+#app
+  max-width: 600px
+  padding: 15px
+  margin: 0 auto
+  line-height: 1.7
+  font-size: 16px
+  p
+    font-size: 18px
+    color: #555
+
+#home
+  .header
+    height: 50%;
+    background: #bc3e4d;
+    background-position: center center;
+    background-image: url(https://unsplash.it/g/1024/768/?random);
+    background-size: cover;
+    padding: 60px
+    display: flex
+    align-items: center
+    justify-content: center
+    h1
+      margin: 0
+      color: white
+  .toc
+    margin-top: 10px
+    .toc-row
+      padding: 10px
+      display: block
+      font-size: 26px
+      text-decoration: none
+      .toc-row-title
+        color: $color1
+        font-family: 'Montserrat', sans-serif
+      .toc-row-date
+        font-family: 'Martel', serif
+        font-size: 16px
+        color: #ccc
+.post
+  &--date
+    color: #ccc

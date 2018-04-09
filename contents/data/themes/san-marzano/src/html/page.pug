@@ -1,0 +1,10 @@
+extends _layout.pug
+
+block content
+  #app.post
+    header
+      a(href='/') &larr; {{ .Site.Title }}
+    h1 {{ .Page.Title }}
+    .post--date
+      | {{ date "Monday, Jan _2 2006" .Page.CreatedAt }}
+    | {{ .Page.Content }}
