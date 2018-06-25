@@ -3,24 +3,36 @@ CMS application and contents
 
 ---
 
-## 環境
-* 動作OS: CentOS 7.4.1708 (もちろん、これ以前の CentOS でも動作すると思われるが、未確認)
-* スペック:
+## Requirements
+* CentOS >= 7.4
+* Spec:
   * CPU: 1vcpu
   * Mem: 512MB
   * Net: 1gbps
-  * ディスク: 1GB (ketchup に投入するデータ量に比例する)
-* app-contents レポをどこに配置するか？ : /home/vagrant/
-* 何を起動するか？:
-  * 起動に関しては下記の手順を参照
-  * ketchup を起動すると config.json の port で指定したポートで LISTEN します。(指定ないときは 127.0.0.1:8000)
+  * Disk: 1GB
 
----
-## 構築手順
+## Structure
+```
+|-- README.md                             (this file)
+|-- applications
+|   `-- ketchup_Linux_x86_64.tar.gz       ketchup binary
+|-- configurations
+|   `-- config.json                       configuration for ketchup
+`-- contents
+    `-- data
+        |-- default.db                    contents for ketchup
+        |-- internal_themes
+        |-- session.key
+        |-- themes
+        |   `-- none
+        |       `-- assets
+        |           `-- none-theme.css    ketchup's theme file for this book
+        `-- tls
+```
 
-ディレクトリ applications 配下に ketchup のバイナリが、ディレクトリ configurations 配下に設定が、ディレクトリ contents 配下に ketchup のデータがあります。
+## How to manually deployment
 
-以下を実行すると起動します。(あ、ちなみに自分の環境では Vagrantfile に  ｀config.vm.network "forwarded_port", guest: 80, host: 8000｀ を設定しています)
+usually, you not need do manually deployment.
 
 ```
 cd ~
@@ -31,15 +43,87 @@ cp -r app-contents/contents/data ./
 sudo nohup ./ketchup start &
 ```
 
-## 動作確認
+## Operation confirmation
 
-### 閲覧者
+### User
 
-ブラウザで http://IP:PORT/index および http://IP:PORT/ping にアクセスするとケチャップの画面が表示されます。 
+you can show ketchup that visit http://IP:PORT/index or http://IP:PORT/ping in your browser.
 
-### 管理者
+### Administrator of this ketchup
 
-ブラウザで http://IP:PORT/admin にアクセスするとケチャップのログイン画面が表示されます。
+you can show ketchup login form that visit http://IP:PORT/admin in your browser.
+and you should be input 'admin' into email, and 'password' into password.
 
-ログイン画面は emal が admin で password が password でログインできます。
+## How to build from source code
 
+### Requirements
+
+* Go >=1.9
+* Node >= 8 with npm adn yarn
+
+### Patch for customise of this book
+
+```
+diff --git a/server/content/context/site.go b/server/content/context/site.go
+index ae2767f..ca7df06 100644
+--- a/server/content/context/site.go
++++ b/server/content/context/site.go
+@@ -1,6 +1,9 @@
+ package context
+ 
+ import (
++	"net"
++	"strings"
++
+ 	"github.com/ketchuphq/ketchup/proto/ketchup/api"
+ 	"github.com/ketchuphq/ketchup/server/content/content"
+ )
+@@ -10,6 +13,20 @@ type SiteContext struct {
+ 	*EngineContext
+ }
+ 
++// Ip is IPv4 Addresses of site
++func (s *SiteContext) Ip() string {
++	addresses := []string{}
++	addrs, _ := net.InterfaceAddrs()
++	for _, a := range addrs {
++		if ipnet, ok := a.(*net.IPNet); ok && !ipnet.IP.IsLoopback() {
++			if ipnet.IP.To4() != nil {
++				addresses = append(addresses, ipnet.IP.String())
++			}
++		}
++	}
++	return strings.Join(addresses, ", ")
++}
++
+ // Title is shorthand for accessing site title
+ func (s *SiteContext) Title() interface{} {
+ 	return s.Data("title")
+diff --git a/server/content/templates/defaultstore/defaultstore.go b/server/content/templates/defaultstore/defaultstore.go
+index 4ae96f0..18e000f 100644
+--- a/server/content/templates/defaultstore/defaultstore.go
++++ b/server/content/templates/defaultstore/defaultstore.go
+@@ -12,8 +12,14 @@ import (
+ )
+ 
+ var noneTemplate = `<html>
+-	<style>#c{max-width:600px;margin:0 auto;font-family:helvetica, sans-serif;}</style>
+-	<div id='c'>{{.Page.Content}}</div>
++	<head>
++        	<style>#c{max-width:600px;margin:0 auto;font-family:helvetica, sans-serif;}</style>
++		<link rel="stylesheet" href="/none-theme.css">
++	</head>
++	<body>
++		<div id='ip'>{{ .Page.Title }} on {{ .Site.Ip }}</div>
++		<div id='c'>{{.Page.Content}}</div>
++	</body>
+ </html>`
+ 
+ var noneTheme = &models.Theme{
+```
+
+### build
+
+1. go get github.com/ketchuphq/ketchup
+2. to apply above patch
+3. `make prepare` and `make`
